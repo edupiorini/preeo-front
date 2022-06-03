@@ -1,7 +1,10 @@
+import { Header } from "./components/Header";
 
 export function App() {
   return (
-    <h1>Hello preeo!</h1>
+    <>
+      <Header />
+    </>
 
   );
 }
