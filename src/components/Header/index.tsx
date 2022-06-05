@@ -1,12 +1,16 @@
 import { Container, Content } from "./style";
 import logoImg from '../../assets/preeologo.png'
 
-export function Header() {
+interface HeaderProps {
+    isOpenSurvey: () => void;
+}
+
+export function Header({ isOpenSurvey }: HeaderProps) {
     return (
         <Container>
             <Content>
                 <img src={logoImg} alt="Preeo logo"></img>
-                <button>
+                <button onClick={isOpenSurvey}>
                     Start Survey
                 </button>
             </Content>
