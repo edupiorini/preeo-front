@@ -18,6 +18,10 @@ input, select{
 
     background: #e7e9ee;
 
+    label{
+        color: var(--text-body);
+    }
+
     &::placeholder{
             color: var(--text-body);
         }
@@ -29,13 +33,23 @@ input, select{
         margin-top: 1rem;
     }
 
-    option{
-        font-size: 1rem;
-    }
     
 }
 
-button[type="submit"]{
+
+option{
+    font-size: 1rem;
+}
+
+label{
+        color: var(--text-body);
+        font-size: .9rem;
+        padding-left: 1.5rem;
+        }
+
+
+
+button{
     width: 100%;
     height: 3rem;
     padding: 0 1.5rem;
