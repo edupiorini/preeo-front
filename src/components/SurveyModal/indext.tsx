@@ -6,12 +6,6 @@ interface SurveyModalProps {
     isOpen: boolean;
 }
 
-interface SurveyContent {
-    age: number;
-    gender: string;
-
-}
-
 Modal.setAppElement('#root');
 
 export function SurveyModal({ isOpen }: SurveyModalProps) {
