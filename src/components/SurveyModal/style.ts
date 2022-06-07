@@ -10,7 +10,7 @@ h2 {
 
 input, select{
     width: 100%;
-    padding: 0 1.5rem;
+    padding: 0 .5rem;
     height: 3rem;
 
     border: 1px solid #d7d7d7;
@@ -44,7 +44,7 @@ option{
 label{
         color: var(--text-body);
         font-size: .9rem;
-        padding-left: 1.5rem;
+        padding-left: .5rem;
         }
 
 
