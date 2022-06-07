@@ -16,6 +16,8 @@ export function SurveyModal({ isOpen }: SurveyModalProps) {
     const [isFirstCar, setIsFirstCar] = useState(false);
     const [numberOfCars, setNumberOfCars] = useState(0);
 
+    const [submitScreenMessage, setSubmitScreenMessage] = useState('Thank you for participating! Click below to submit your answers');
+
     const [renderPartOne, setRenderPartOne] = useState(true);
     const [renderPartTwo, setRenderPartTwo] = useState(false);
     const [renderPartThree, setRenderPartThree] = useState(false);
@@ -63,6 +65,10 @@ export function SurveyModal({ isOpen }: SurveyModalProps) {
         isFirstCar
             ? setShowSubmitMessage(true)
             : setRenderLastPart(true);
+
+        if (showSubmitMessage) {
+            setSubmitScreenMessage('We are targeting more experienced clients, thank you for your interest')
+        }
     }
 
     function handleLastPart() {
@@ -196,7 +202,7 @@ export function SurveyModal({ isOpen }: SurveyModalProps) {
                 {
                     showSubmitMessage
                         ? <>
-                            <h1>We are here</h1>
+                            <h1>{submitScreenMessage}</h1>
                             <button onClick={handleAgeCondition} type="submit">Submit Survey</button>
                         </>
                         : <></>
