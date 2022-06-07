@@ -1,5 +1,6 @@
-import { FormEvent, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import Modal from 'react-modal';
+import { api } from '../../services/api';
 import { Selector } from './Selector';
 import { Container } from './style';
 
@@ -9,14 +10,33 @@ interface SurveyModalProps {
 
 interface CarListProps {
     name: string;
+    id: number;
+}
+interface Car {
+    carNumber: number;
+    carMake: string;
+    carModel: string;
+}
+interface Survey {
+    gender: string;
+    age: number;
+    hasDrivingLicense: boolean;
+    isFirstCar: boolean;
+    driveTrain: 'FWD' | 'RWD' | 'Not' | string;
+    fuelEmissionWorried: boolean;
+    numberOfCars: number;
+    cars?: Car[];
+    createdAt: Date;
 }
 
 Modal.setAppElement('#root');
 
 export function SurveyModal({ isOpen }: SurveyModalProps) {
 
+    const [survey, setSurvey] = useState<Survey>();
+
     const [age, setAge] = useState(0);
-    const [gender, setGender] = useState('M');
+    const [gender, setGender] = useState('Male');
     const [hasDrivingLicense, setHasDrivingLicense] = useState(false);
     const [isFirstCar, setIsFirstCar] = useState(false);
     const [carType, setCarType] = useState('Not')
@@ -34,10 +54,17 @@ export function SurveyModal({ isOpen }: SurveyModalProps) {
     const [renderPartFive, setRenderPartFive] = useState(false);
     const [showSubmitMessage, setShowSubmitMessage] = useState(false);
 
+    useEffect(() => {
+
+        api.get('/surveys')
+            .then(response => console.log(response))
+    }, [])
+
     function handleDynamicSelector() {
         const details = [];
         for (let i = 0; i < numberOfCars; i++) {
             details[i] = {
+                id: i,
                 name: `car-${i}`
             }
         }
@@ -108,9 +135,32 @@ export function SurveyModal({ isOpen }: SurveyModalProps) {
 
     // --------------------------- End of Handling Parts Functions ------------------------
 
-    function handleCreateSurvey(event: FormEvent) {
+    async function handleCreateSurvey(event: FormEvent) {
 
         event.preventDefault();
+
+        const newSurvey: Survey = {
+            age,
+            gender,
+            hasDrivingLicense,
+            isFirstCar,
+            driveTrain: carType,
+            fuelEmissionWorried: fuelEmission,
+            numberOfCars,
+            createdAt: new Date()
+        }
+
+        setSurvey(newSurvey)
+
+        await api.post('/surveys', newSurvey).then(response => console.log(response.data));
+
+        setAge(0);
+        setGender('Male');
+        setHasDrivingLicense(false);
+        setIsFirstCar(false);
+        setCarType('Not');
+        setNumberOfCars(0);
+        setFuelEmission(false);
 
 
     }
@@ -229,11 +279,7 @@ export function SurveyModal({ isOpen }: SurveyModalProps) {
 
 
                             <input
-                                onChange={(e) => {
-                                    setNumberOfCars(Number(e.target.value))
-                                    console.log(numberOfCars)
-                                }
-                                }
+                                onChange={(e) => setNumberOfCars(Number(e.target.value))}
                                 type="number"
                                 min='0'
                                 placeholder="How many cars are there in your family?"
@@ -251,7 +297,7 @@ export function SurveyModal({ isOpen }: SurveyModalProps) {
                         <>
                             {dynamicCarList.map(item => (
                                 <Selector
-                                    key={item.name}
+                                    key={item.id}
                                     inputPlaceholderSetter='Enter your car model'
 
                                     selectName={item.name}
@@ -273,7 +319,7 @@ export function SurveyModal({ isOpen }: SurveyModalProps) {
                     showSubmitMessage
                         ? <>
                             <h2>{submitScreenMessage}</h2>
-                            <button onClick={handleAgeCondition} type="submit">Submit Survey</button>
+                            <button type="submit">Submit Survey</button>
                         </>
                         : <></>
                 }

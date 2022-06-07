@@ -26,8 +26,9 @@ export function Selector({
     return (
 
         <>
-            <label htmlFor={selectName}>{labelText}</label>
+            <label key={`selectName${+4}`} htmlFor={selectName}>{labelText}</label>
             <select
+                key={`selectName${+2}`}
                 name={selectName}
                 value={carMake}
                 onChange={(e) => setCarMake(e.target.value)}
@@ -39,6 +40,7 @@ export function Selector({
                 ))}
             </select>
             <input
+                key={`selectName${+1}`}
                 type="text"
                 value={carModel}
                 placeholder={inputPlaceholderSetter}
