@@ -33,7 +33,6 @@ Modal.setAppElement('#root');
 
 export function SurveyModal({ isOpen }: SurveyModalProps) {
 
-    const [survey, setSurvey] = useState<Survey>();
 
     const [age, setAge] = useState(0);
     const [gender, setGender] = useState('Male');
@@ -149,8 +148,6 @@ export function SurveyModal({ isOpen }: SurveyModalProps) {
             numberOfCars,
             createdAt: new Date()
         }
-
-        setSurvey(newSurvey)
 
         await api.post('/surveys', newSurvey).then(response => console.log(response.data));
 
