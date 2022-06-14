@@ -1,12 +1,11 @@
 import { FormEvent, useEffect, useState } from 'react';
 import Modal from 'react-modal';
+
 import { api } from '../../services/api';
 import { Selector } from './Selector';
 import { Container } from './style';
 
-interface SurveyModalProps {
-    isOpen: boolean;
-}
+import closeButton from '../../assets/close.svg';
 
 interface CarListProps {
     name: string;
@@ -29,9 +28,15 @@ interface Survey {
     createdAt: Date;
 }
 
+interface NewTransactionModalProps {
+    onRequestClose: () => void;
+    isOpen: boolean;
+
+}
+
 Modal.setAppElement('#root');
 
-export function SurveyModal({ isOpen }: SurveyModalProps) {
+export function SurveyModal({ isOpen, onRequestClose }: NewTransactionModalProps) {
 
 
     const [age, setAge] = useState(0);
@@ -158,6 +163,7 @@ export function SurveyModal({ isOpen }: SurveyModalProps) {
         setCarType('Not');
         setNumberOfCars(0);
         setFuelEmission(false);
+        onRequestClose();
 
 
     }
@@ -166,9 +172,13 @@ export function SurveyModal({ isOpen }: SurveyModalProps) {
         <Modal
             overlayClassName='react-modal-overlay'
             className='react-modal-content'
+            onRequestClose={onRequestClose}
 
             isOpen={isOpen}
         >
+            <button className='react-modal-close' type='button' onClick={onRequestClose}>
+                <img src={closeButton} alt="Close modal" />
+            </button>
             <Container onSubmit={handleCreateSurvey}>
 
                 <h2>Complete the survey</h2>

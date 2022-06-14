@@ -19,7 +19,7 @@ export function App() {
     <>
       <Header isOpenSurvey={handleOpenSurveyModal} />
       <Summary />
-      <SurveyModal isOpen={isModalOpen} />
+      <SurveyModal isOpen={isModalOpen} onRequestClose={handleCloseSurveyModal} />
       <GlobalStyle />
     </>
 
