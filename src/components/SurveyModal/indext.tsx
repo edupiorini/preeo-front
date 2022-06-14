@@ -163,6 +163,11 @@ export function SurveyModal({ isOpen, onRequestClose }: NewTransactionModalProps
         setCarType('Not');
         setNumberOfCars(0);
         setFuelEmission(false);
+
+        // set to initial state
+        setRenderPartOne(true);
+        setRenderPartFive(false);
+        setShowSubmitMessage(false);
         onRequestClose();
 
 
